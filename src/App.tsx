@@ -6,7 +6,7 @@ const Todos = React.lazy(()=>import('./components/Todos'))
 
 type todosModel = string[];
 function App() {
-  const [todos, setTodos] = useState<todosModel>([]);
+  const [todos, setTodos] = useState<todosModel>({});
   const addTodoHandler = (todoText: string) => {
     console.log(todoText);
     setTodos([...todos, todoText]);
