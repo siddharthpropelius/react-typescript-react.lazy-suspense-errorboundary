@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import ErrorBoundary from './components/ErrorBoundary'
+import React, { useState,Suspense } from 'react';
 import './App.css';
+const NewTodos = React.lazy(()=>import('./components/NewTodos'))
+const Todos = React.lazy(()=>import('./components/Todos'))
 
+type todosModel = string[];
 function App() {
+  const [todos, setTodos] = useState<todosModel>([]);
+  const addTodoHandler = (todoText: string) => {
+    console.log(todoText);
+    setTodos([...todos, todoText]);
+  };
+
+  const deleteTodoHandler = (todoText: string) => {
+    const filteredState = todos.filter((item) => item !== todoText);
+    setTodos(filteredState);
+  };
   return (
+      <>
+      <ErrorBoundary>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Suspense fallback={<p>Loading.....</p>}>
+        <NewTodos onAddTodo={addTodoHandler} />
+      <Todos items={todos} onDeleteTodo={deleteTodoHandler} />
+      </Suspense>
     </div>
+      </ErrorBoundary>
+
+      </>
   );
 }
 
