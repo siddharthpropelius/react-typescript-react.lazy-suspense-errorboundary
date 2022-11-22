@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import Button from '../layouts/Button'
 
 interface newTodosModel {
   onAddTodo: (text: string) => void;
@@ -20,7 +21,7 @@ const NewTodos: React.FC<newTodosModel> = (props) => {
       <form onSubmit={handleOnSubmit}>
         <label>Todo Title:</label>
         <input type="text" ref={inputTxtRef} required />
-        <button>Add</button>
+        <Button title={'Add'}/>
       </form>
     </div>
   );
